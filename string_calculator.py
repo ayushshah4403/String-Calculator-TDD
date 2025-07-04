@@ -13,6 +13,11 @@ def add(numbers):
     for delimiter in delimiters:
         numbers = numbers.replace(delimiter, " ")
         
-    nums = numbers.split()
-    return sum(int(num) for num in nums)
+    nums = [int(num) for num in numbers.split()]
+    
+    negatives = [num for num in nums if num < 0]
+    if negatives:
+        raise Exception(f"Negatives not allowed: {','.join(map(str, negatives))}")
+    
+    return sum(nums)
 
