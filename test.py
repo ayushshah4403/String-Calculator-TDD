@@ -13,6 +13,9 @@ class TestStringCalculator(unittest.TestCase):
         
     def test_multiple_numbers_comma_separated(self):
         self.assertEqual(add("1,2,3,4,5"), 15)
+    
+    def test_newline_as_delimiter(self):
+        self.assertEqual(add("1\n2,3\n4,5"), 15)
         
 if __name__ == "__main__":
     unittest.main()
