@@ -1,6 +1,10 @@
 import re
 
+_call_count_ = 0
+
 def add(numbers):
+    global _call_count_
+    _call_count_ += 1
     if numbers == "":
         return 0
     delimiters = [",", "\n"]
@@ -28,3 +32,5 @@ def add(numbers):
     
     return sum(num for num in num_list if num <= 1000)
 
+def get_call_count():
+    return _call_count_

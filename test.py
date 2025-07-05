@@ -1,5 +1,5 @@
 import unittest
-from string_calculator import add
+from string_calculator import add, get_call_count
 
 class TestStringCalculator(unittest.TestCase):
     def test_empty_string(self):
@@ -31,6 +31,12 @@ class TestStringCalculator(unittest.TestCase):
         
     def test_delimiter_of_custom_length(self):
         self.assertEqual(add("//[***]\n1***2***3***4***5"), 15)
+        
+    def test_get_call_count(self):
+        add("3, 3")
+        add("6")
+        current_count = get_call_count()
+        self.assertTrue(current_count >= 2)
         
 if __name__ == "__main__":
     unittest.main()
