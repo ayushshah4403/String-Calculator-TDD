@@ -1,3 +1,5 @@
+import re
+
 def add(numbers):
     if numbers == "":
         return 0
@@ -5,19 +7,24 @@ def add(numbers):
     
     #Check custom delimiters
     if numbers.startswith("//"):
-        parts = numbers.split("\n", 1)
-        custom_delimiter = parts[0][2:]
-        delimiters.append(custom_delimiter)
-        numbers = parts[1]
-    
-    for delimiter in delimiters:
-        numbers = numbers.replace(delimiter, " ")
+        delimiter_part, numbers = numbers.split("\n", 1)
+        custom = delimiter_part[2:]
         
-    nums = [int(num) for num in numbers.split()]
+        #Check for long delimiter
+        
+        if custom.startswith("[") and custom.endswith("]"):
+            long_delimiter = custom[1:-1]
+            delimiters.append(long_delimiter)
+        else:
+            delimiters.append(custom)
+        
+    delimiter_regex = "|".join(map(re.escape, delimiters))
+    num_list = [int(n) for n in re.split(delimiter_regex, numbers)]
     
-    negatives = [num for num in nums if num < 0]
+   #Handling negatives 
+    negatives = [num for num in num_list if num < 0]
     if negatives:
         raise Exception(f"Negatives not allowed: {','.join(map(str, negatives))}")
     
-    return sum(num for num in nums if num <= 1000)
+    return sum(num for num in num_list if num <= 1000)
 
